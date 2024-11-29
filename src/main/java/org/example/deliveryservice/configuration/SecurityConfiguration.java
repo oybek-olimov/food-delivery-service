@@ -1,6 +1,8 @@
 package org.example.deliveryservice.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.deliveryservice.generic.AppErrorDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,15 +38,8 @@ public class SecurityConfiguration {
     private final JwtTokenUtil jwtTokenUtil;
     private final OTPAuthenticationProvider otpAuthenticationProvider;
 
-    public static final String[] WHITE_LIST = {
-            "/api/auth/verify-otp",
-            "/api/auth/register",
-            "/api/auth/login",
-            "/swagger-ui/**",
-            "/swagger-resources/**",
-            "/v3/api-docs/**",
-            "/api/oauth2/verify-token"
-    };
+    @Value("${security.white-list}")
+    private String[] whiteList;
 
     public SecurityConfiguration(ObjectMapper objectMapper, UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil, OTPAuthenticationProvider otpAuthenticationProvider) {
         this.objectMapper = objectMapper;
@@ -59,7 +54,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(httpReqConf ->
-                        httpReqConf.requestMatchers(WHITE_LIST).permitAll()
+                        httpReqConf.requestMatchers(whiteList).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionConf -> sessionConf.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
