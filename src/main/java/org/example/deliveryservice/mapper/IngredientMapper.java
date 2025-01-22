@@ -1,6 +1,6 @@
 package org.example.deliveryservice.mapper;
 
-import org.example.deliveryservice.dto.IngredientDto;
+import org.example.deliveryservice.dto.inredientDto.IngredientDto;
 import org.example.deliveryservice.entity.Ingredients;
 import org.mapstruct.Mapper;
 

@@ -61,14 +61,11 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
-    }
-
 
     @Override
-    public Product updateProduct(CreateProductDto dto, Product product) {
+    public ProductResponseDto updateProduct(CreateProductDto dto, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
         Category category = categoryRepository.findByCategoryName(dto.getCategory().getName())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found with name: " + dto.getCategory().getName()));
 
@@ -79,20 +76,29 @@ public class ProductServiceImpl implements ProductService {
         product.setIngredients(dto.getIngredients());
         product.setCategory(category);
 
-        return productRepository.save(product);
+        Product updatedProduct = productRepository.save(product);
+
+        return productMapper.toProductResponseDto(updatedProduct);
     }
 
     @Override
-    public Product updateProductIsPresent(UpdateIsPresentProductDto dto, Product product) {
+    public ProductResponseDto updateProductIsPresent(UpdateIsPresentProductDto dto, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
+
         if (dto == null || product == null) {
             throw new IllegalArgumentException("Invalid input data");
         }
         product.setPresent(dto.isPresent());
-        return productRepository.save(product);
+        Product product1 = productRepository.save(product);
+        return productMapper.toProductResponseDto(product1);
     }
 
     @Override
-    public Product updateProductDiscount(UpdateDiscountProductDto dto, Product product) {
+    public ProductResponseDto updateProductDiscount(UpdateDiscountProductDto dto, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + productId));
+
         if (dto == null || product == null) {
             throw new IllegalArgumentException("Invalid input data");
         }
@@ -100,7 +106,8 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Discount must be small than product price");
         }
         product.setDiscount(dto.getDiscount());
-        return productRepository.save(product);
+        Product product1 = productRepository.save(product);
+        return productMapper.toProductResponseDto(product1);
     }
 
 
@@ -160,4 +167,12 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponseDto> searchByName(String name) {
         return productMapper.toProductResponseDtoList(productRepository.findByProductNameContainingIgnoreCase(name));
     }
+
+    @Override
+    public ProductResponseDto getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + id));
+        return productMapper.toProductResponseDto(product);
+    }
+
 }

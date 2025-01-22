@@ -44,7 +44,7 @@ public class Product {
 
     @ElementCollection
     @Column(nullable = false)
-    private List<String> ingredients = new ArrayList<>();
+    private List<String> ingredients;
 
     @ManyToOne
     @JoinColumn(name = "category_id" , nullable = false)

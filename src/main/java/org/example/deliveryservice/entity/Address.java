@@ -54,13 +54,5 @@ public class Address {
 	@ManyToMany(mappedBy = "addresses")
 	private List<AuthUser> authUsers;
 
-	public Address(String country, String state, String city, String pincode, String street, String buildingName) {
-		this.country = country;
-		this.state = state;
-		this.city = city;
-		this.pincode = pincode;
-		this.street = street;
-		this.buildingName = buildingName;
-	}
 
 }

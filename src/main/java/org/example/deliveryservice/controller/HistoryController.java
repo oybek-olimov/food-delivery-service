@@ -2,6 +2,7 @@ package org.example.deliveryservice.controller;
 
 import org.example.deliveryservice.entity.OrderHistory;
 import org.example.deliveryservice.service.HistoryService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class HistoryController {
         this.historyService = historyService;
     }
 
-//    @GetMapping
+    @GetMapping
     List<OrderHistory> getAllHistory() {
         return historyService.getAllOrderHistory();
     }

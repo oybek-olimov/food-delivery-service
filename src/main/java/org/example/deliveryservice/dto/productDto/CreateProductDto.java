@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.deliveryservice.dto.CategoryDto;
+import org.example.deliveryservice.dto.categoryDto.CategoryDto;
 
 import java.util.ArrayList;
 import java.util.List;

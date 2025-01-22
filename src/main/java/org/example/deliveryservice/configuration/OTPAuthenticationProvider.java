@@ -1,6 +1,7 @@
 package org.example.deliveryservice.configuration;
 
 
+import org.example.deliveryservice.service.otp.OtpService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

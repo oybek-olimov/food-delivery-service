@@ -21,4 +21,7 @@ public interface NotificationService {
     NotificationDto update(Long id, NotificationUpdateDto dto);
 
     void delete(Long id);
+
+    void sendEmailAndSaveNotification(String email, String message) throws RuntimeException;
+
 }

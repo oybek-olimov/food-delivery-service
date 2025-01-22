@@ -36,16 +36,9 @@ public class Cart {
     private AuthUser authUser;
 
     @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<CartItem> cartItems = new ArrayList<>();
+    private List<CartItem> cartItems;
 
     private Long totalPrice;
 
-    public void addCartItem(CartItem cartItem) {
-        if (this.cartItems == null) {
-            this.cartItems = new ArrayList<>();
-        }
-        this.cartItems.add(cartItem);
-        cartItem.setCart(this);
-    }
 
 }

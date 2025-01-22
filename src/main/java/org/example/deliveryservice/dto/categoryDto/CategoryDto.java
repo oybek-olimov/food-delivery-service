@@ -1,4 +1,4 @@
-package org.example.deliveryservice.dto;
+package org.example.deliveryservice.dto.categoryDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +13,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class IngredientDto {
+public class CategoryDto {
     private String name;
 }

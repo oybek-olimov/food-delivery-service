@@ -17,13 +17,13 @@ import java.util.List;
 public interface AuthUserMapper {
 
 
-    public AuthUserResponseDTO toResponseDTO(@Valid AuthUser authUser);
+    AuthUserResponseDTO toResponseDTO(@Valid AuthUser authUser);
 
-    public List<AuthUserResponseDTO> toResponseDTOList(@Valid List<AuthUser> authUsers);
+    List<AuthUserResponseDTO> toResponseDTOList(@Valid List<AuthUser> authUsers);
 
-    public AuthUserResponseDTO toUpdateDTO(@Valid UpdateAuthUserDTO dto);
+    AuthUserResponseDTO toUpdateDTO(@Valid UpdateAuthUserDTO dto);
 
-    public AuthUserResponseDTO toCreateDTO(@Valid CreateAuthUserDTO dto);
+    AuthUserResponseDTO toCreateDTO(@Valid CreateAuthUserDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     AuthUser partialUpdateAuthUser(UpdateAuthUserDTO dto, @MappingTarget AuthUser user);

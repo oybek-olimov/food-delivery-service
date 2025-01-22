@@ -55,7 +55,6 @@ public class CartServiceImpl implements CartService {
                 }).collect(Collectors.toList());
         cart.setCartItems(cartItems);
 
-        // Umumiy narxni hisoblash
         cart.setTotalPrice(calculateTotalPrice(cartItems));
 
         cartRepository.save(cart);

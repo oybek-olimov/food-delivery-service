@@ -13,12 +13,13 @@ import java.util.Optional;
 public interface ProductService {
     ProductResponseDto createProduct(CreateProductDto product);
     List<ProductResponseDto> getAllProducts();
-    Optional<Product> getProductById(Long id);
-    Product updateProduct(CreateProductDto dto, Product product);
-    Product updateProductIsPresent(UpdateIsPresentProductDto dto, Product product);
-    Product updateProductDiscount(UpdateDiscountProductDto dto, Product product);
+    ProductResponseDto updateProduct(CreateProductDto dto, Long productId);
+    ProductResponseDto updateProductIsPresent(UpdateIsPresentProductDto dto, Long productId);
+    ProductResponseDto updateProductDiscount(UpdateDiscountProductDto dto, Long productId);
     void deleteProductById(Long id);
     List<ProductResponseDto> getProductsByCategoryName(String categoryName);
     List<ProductResponseDto> getProductsByPopularity();
     List<ProductResponseDto> searchByName(String name);
+    ProductResponseDto getProductById(Long id);
+
 }

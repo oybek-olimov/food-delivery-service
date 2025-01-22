@@ -38,11 +38,9 @@ import java.util.Optional;
 @Tag(name = "Product API", description = "API for product")
 @RequestMapping("api/product")
 public class ProductController {
-    private final ProductMapper productMapper;
     private final ProductService productService;
 
-    public ProductController(ProductMapper productMapper, ProductService productService) {
-        this.productMapper = productMapper;
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -50,9 +48,9 @@ public class ProductController {
     @PostMapping
     @Transactional
     public ResponseEntity<ProductResponseDto> addProduct(@Valid @RequestBody CreateProductDto dto) {
-        ProductResponseDto createdProduct = productService.createProduct(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(dto));
     }
+
     @GetMapping("/search")
     public List<ProductResponseDto> searchProducts(@RequestParam String name) {
         return productService.searchByName(name);
@@ -69,15 +67,12 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDto> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
-        return product.map(value -> ResponseEntity.ok(productMapper.toProductResponseDto(value)))
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + id));
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @GetMapping("/{categoryName}/products")
     public ResponseEntity<List<ProductResponseDto>> getProductsByCategory(@PathVariable String categoryName) {
-        List<ProductResponseDto> products = productService.getProductsByCategoryName(categoryName);
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(productService.getProductsByCategoryName(categoryName));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -91,30 +86,20 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long id, @RequestBody CreateProductDto dto) {
-        Product existingProduct = productService.getProductById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-        Product updatedProduct = productService.updateProduct(dto, existingProduct);
-        return ResponseEntity.ok(productMapper.toProductResponseDto(updatedProduct));
+        return ResponseEntity.ok(productService.updateProduct(dto, id));
     }
 
     @PutMapping("/{id}/isPresent")
     public ResponseEntity<ProductResponseDto> updateProductIsPresent(
             @PathVariable Long id, @RequestBody UpdateIsPresentProductDto dto) {
-        Product existingProduct = productService.getProductById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
-        Product updatedProduct = productService.updateProductIsPresent(dto, existingProduct);
-        return ResponseEntity.ok(productMapper.toProductResponseDto(updatedProduct));
+        return ResponseEntity.ok(productService.updateProductIsPresent(dto, id));
     }
 
     @PutMapping("/{id}/discount")
     public ResponseEntity<ProductResponseDto> updateProductDiscount(
             @PathVariable Long id, @RequestBody UpdateDiscountProductDto dto) {
-        Product existingProduct = productService.getProductById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-
-        Product updatedProduct = productService.updateProductDiscount(dto, existingProduct);
-        return ResponseEntity.ok(productMapper.toProductResponseDto(updatedProduct));
+        return ResponseEntity.ok(productService.updateProductDiscount(dto, id));
     }
 
     @GetMapping("/popularity")

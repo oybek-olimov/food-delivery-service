@@ -26,15 +26,13 @@ public class AuthUserServiceImpl implements AuthUserService {
     private final AuthUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthUserMapper authUserMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenUtil jwtToken;
     private final AuthUserRepository authUserRepository;
 
-    public AuthUserServiceImpl(AuthUserRepository userRepository, PasswordEncoder passwordEncoder, AuthUserMapper authUserMapper, BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenUtil jwtToken, AuthUserRepository authUserRepository) {
+    public AuthUserServiceImpl(AuthUserRepository userRepository, PasswordEncoder passwordEncoder, AuthUserMapper authUserMapper, JwtTokenUtil jwtToken, AuthUserRepository authUserRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authUserMapper = authUserMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.jwtToken = jwtToken;
         this.authUserRepository = authUserRepository;
     }

@@ -55,11 +55,11 @@ public class AuthUser {
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<AuthRole> roles = new HashSet<>();
+    private Set<AuthRole> roles;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_address", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private List<Address> addresses = new ArrayList<>();
+    private List<Address> addresses;
 
     @OneToOne( cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
     private Cart cart;

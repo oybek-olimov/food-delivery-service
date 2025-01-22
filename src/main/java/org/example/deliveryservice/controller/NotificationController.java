@@ -29,8 +29,6 @@ import java.util.List;
 public class NotificationController {
 
     private final NotificationService notificationService;
-    private final JavaMailSender mailSender;
-    private final AuthUserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<?> createNotification(@RequestBody @Valid NotificationCreateDto dto) {
@@ -66,31 +64,10 @@ public class NotificationController {
     }
 
     @PostMapping("/send-email")
-    public ResponseEntity<String> sendEmail(@RequestParam String email, @RequestParam String message) {
-        try {
+    public ResponseEntity<Void> sendEmail(@RequestParam String email, @RequestParam String message) {
+        notificationService.sendEmailAndSaveNotification(email, message);
+        return ResponseEntity.ok().build();
 
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(email);
-            mailMessage.setSubject("Yangi xabar");
-            mailMessage.setText(message);
-            mailSender.send(mailMessage);
-
-            NotificationCreateDto notificationCreateDto = new NotificationCreateDto(
-                    message,
-                    NotificationType.INFO,
-                    getUserIdByEmail(email)
-            );
-            notificationService.create(notificationCreateDto);
-
-            return ResponseEntity.ok("Xabar email orqali yuborildi va bazaga saqlandi.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Xabar yuborishda xatolik yuz berdi: " + e.getMessage());
-        }
     }
 
-    private Long getUserIdByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + email))
-                .getId();
-    }
 }

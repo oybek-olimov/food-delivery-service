@@ -9,13 +9,13 @@ import java.time.ZoneId;
 @Getter
 public class AppErrorDTO {
 
-    private String errorMessage;
+    private final String errorMessage;
 
-    private String errorPath;
+    private final String errorPath;
 
-    private int errorCode;;
+    private final int errorCode;;
 
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
 
     public AppErrorDTO(String errorMessage, String errorPath, int errorCode) {
         this.errorMessage = errorMessage;
