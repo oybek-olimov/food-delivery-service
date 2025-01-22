@@ -1,4 +1,4 @@
-package org.example.deliveryservice.service;
+package org.example.deliveryservice.configuration;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

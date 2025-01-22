@@ -1,7 +1,7 @@
 package org.example.deliveryservice.configuration;
 
 
-import org.example.deliveryservice.service.otp.OtpService;
+import org.example.deliveryservice.service.impl.OtpServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 @Service
 public class OTPAuthenticationProvider implements AuthenticationProvider {
 
-    private final OtpService otpService;
+    private final OtpServiceImpl otpServiceImpl;
 
-    public OTPAuthenticationProvider(OtpService otpService) {
-        this.otpService = otpService;
+    public OTPAuthenticationProvider(OtpServiceImpl otpServiceImpl) {
+        this.otpServiceImpl = otpServiceImpl;
     }
 
 
@@ -26,7 +26,7 @@ public class OTPAuthenticationProvider implements AuthenticationProvider {
         String email = authentication.getName();
         String otp = authentication.getCredentials().toString();
 
-        if (otpService.validateOTP(email, otp)) {
+        if (otpServiceImpl.validateOTP(email, otp)) {
             return new UsernamePasswordAuthenticationToken(email, otp, new ArrayList<>());
         } else {
             throw new BadCredentialsException("Noto'g'ri OTP kiritildi.");

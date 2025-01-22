@@ -1,10 +1,11 @@
-package org.example.deliveryservice.service.otp;
+package org.example.deliveryservice.service.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.example.deliveryservice.entity.Otp;
 import org.example.deliveryservice.repository.OtpRepository;
+import org.example.deliveryservice.service.OtpService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,13 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class OtpService {
+public class OtpServiceImpl implements OtpService {
 
     private final JavaMailSender mailSender;
 
     private final OtpRepository otpRepository;
 
-    public OtpService(JavaMailSender mailSender, OtpRepository otpRepository) {
+    public OtpServiceImpl(JavaMailSender mailSender, OtpRepository otpRepository) {
         this.mailSender = mailSender;
         this.otpRepository = otpRepository;
     }
@@ -68,19 +69,6 @@ public class OtpService {
 
     @Transactional
     public boolean validateOTP(String email, String otpCode) {
-        /*
-        return otpRepository.existsByCodeAndEmailNotExpired(email,otpCode,LocalDateTime.now()).i;
-        Optional<Otp> otpOptional = otpRepository.findByEmail(email);
-
-        if (otpOptional.isPresent()) {
-            Otp otp = otpOptional.get();
-            if (otp.getOtpCode().equals(otpCode) && otp.getExpirationTime().isAfter(LocalDateTime.now())) {
-                otpRepository.delete(otp);
-                return true;
-            }
-        }*/
-
-
         return otpRepository.findByEmail(email)
                 .filter(otp -> otp.getOtpCode().equals(otpCode) && otp.getExpirationTime().isAfter(LocalDateTime.now()))
                 .isPresent();

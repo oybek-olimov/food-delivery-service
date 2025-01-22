@@ -2,8 +2,8 @@ package org.example.deliveryservice.controller;
 
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import org.example.deliveryservice.service.GoogleTokenValidator;
-import org.example.deliveryservice.service.authUser.AuthUserServiceImpl;
+import org.example.deliveryservice.configuration.GoogleTokenValidator;
+import org.example.deliveryservice.service.impl.AuthUserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

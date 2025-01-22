@@ -1,4 +1,4 @@
-package org.example.deliveryservice.service.authUser;
+package org.example.deliveryservice.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.deliveryservice.configuration.JwtTokenUtil;
@@ -9,9 +9,9 @@ import org.example.deliveryservice.entity.auth.AuthUser;
 import org.example.deliveryservice.exception.ResourceNotFoundException;
 import org.example.deliveryservice.mapper.AuthUserMapper;
 import org.example.deliveryservice.repository.AuthUserRepository;
+import org.example.deliveryservice.service.AuthUserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

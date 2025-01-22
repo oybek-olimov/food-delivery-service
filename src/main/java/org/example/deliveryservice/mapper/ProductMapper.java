@@ -13,7 +13,6 @@ import java.util.List;
 public interface ProductMapper {
     Product toProduct(CreateProductDto dto);
 
-    @Mapping(target = "isPresent", source = "present")
     ProductResponseDto toProductResponseDto(Product product);
 
 

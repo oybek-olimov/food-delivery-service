@@ -8,8 +8,8 @@ import org.example.deliveryservice.dto.authUserDto.CreateAuthUserDTO;
 import org.example.deliveryservice.dto.authUserDto.UpdateAuthUserDTO;
 import org.example.deliveryservice.dto.requestDto.LoginRequest;
 import org.example.deliveryservice.dto.requestDto.OtpRequest;
-import org.example.deliveryservice.service.authUser.AuthUserServiceImpl;
-import org.example.deliveryservice.service.otp.OtpService;
+import org.example.deliveryservice.service.impl.AuthUserServiceImpl;
+import org.example.deliveryservice.service.impl.OtpServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,20 +31,20 @@ public class AuthController {
 
     private final AuthUserServiceImpl authUserServiceImpl;
     private final AuthenticationManager authenticationManager;
-    private final OtpService otpService;
+    private final OtpServiceImpl otpServiceImpl;
     private final JwtTokenUtil jwtTokenUtil;
 
-    public AuthController(AuthUserServiceImpl authUserServiceImpl, AuthenticationManager authenticationManager, OtpService otpService, JwtTokenUtil jwtTokenUtil) {
+    public AuthController(AuthUserServiceImpl authUserServiceImpl, AuthenticationManager authenticationManager, OtpServiceImpl otpServiceImpl, JwtTokenUtil jwtTokenUtil) {
         this.authUserServiceImpl = authUserServiceImpl;
         this.authenticationManager = authenticationManager;
-        this.otpService = otpService;
+        this.otpServiceImpl = otpServiceImpl;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody CreateAuthUserDTO dto) {
         authUserServiceImpl.registerUser(dto);
-        otpService.sendOtp(dto.email());
+        otpServiceImpl.sendOtp(dto.email());
         return ResponseEntity.status(201).build();
 
     }
@@ -53,13 +53,13 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password());
         authenticationManager.authenticate(authentication);
-        otpService.sendOtp(loginRequest.email());
+        otpServiceImpl.sendOtp(loginRequest.email());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/verify-otp")
     public ResponseEntity<String> verifyOtp(@RequestBody OtpRequest otpRequest) {
-        boolean isOtpValid = otpService.validateOTP(otpRequest.getEmail(), otpRequest.getOtpCode());
+        boolean isOtpValid = otpServiceImpl.validateOTP(otpRequest.getEmail(), otpRequest.getOtpCode());
         if (isOtpValid) {
             String token = jwtTokenUtil.generateToken(otpRequest.getEmail());
             return ResponseEntity.ok(token);
