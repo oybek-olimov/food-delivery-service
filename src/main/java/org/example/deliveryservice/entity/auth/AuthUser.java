@@ -42,7 +42,7 @@ public class AuthUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 10, max = 20, message = "First Name must be between 5 and 30 characters long")
+    @Size(min = 2, max = 20, message = "First Name must be between 2 and 20 characters long")
     @Pattern(regexp = "^[a-zA-Z]*$", message = "First Name must not contain numbers or special characters")
     private String name;
 
