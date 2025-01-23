@@ -14,8 +14,6 @@ The **Food Delivery Service** project is a backend system designed to manage and
   - Stateless authentication using JWT.
 - **API Documentation**
   - Integrated Swagger for API exploration.
-- **Exception Handling**
-  - Centralized exception handling using `@ControllerAdvice`.
 
 ---
 
