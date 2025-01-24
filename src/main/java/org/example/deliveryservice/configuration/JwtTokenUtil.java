@@ -4,10 +4,7 @@ package org.example.deliveryservice.configuration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -16,9 +13,11 @@ import java.util.Date;
 @Component
 public class JwtTokenUtil {
 
-    @Value("${jwt.secret.key}")
-    private static String secretKey;
-    public static final Key signignKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
+    private final Key signingKey;
+
+    public JwtTokenUtil(Key signingKey) {
+        this.signingKey = signingKey;
+    }
 
     public String generateToken(@NonNull String email) {
         long twentyDaysInMillis = 20 * 24 * 60 * 60 * 1000; // 20 kunni millisekundda hisoblash
@@ -28,13 +27,13 @@ public class JwtTokenUtil {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + twentyDaysInMillis))
                 .setIssuer("https://www.google.com")
-                .signWith(signignKey, SignatureAlgorithm.HS256)
+                .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     private Claims getClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(signignKey)
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
