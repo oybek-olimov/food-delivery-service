@@ -8,7 +8,6 @@ import org.example.deliveryservice.dto.orderDto.OrderResponseDto;
 import java.util.List;
 
 public interface OrderService {
-    OrderResponseDto createOrder(OrderCreateDto orderCreateDto);
     OrderResponseDto createOrderFromCart(Long cartId);
     OrderResponseDto getOrderById(Long orderId);
     List<OrderResponseDto> getAllOrders();

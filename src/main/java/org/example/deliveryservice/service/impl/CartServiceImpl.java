@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService {
         List<CartItem> cartItems = cartCreateDto.getCartItems().stream()
                 .map(dto -> {
                     CartItem cartItem = toCartItem(dto);
-                    cartItem.setCart(cart); // `Cart` ni `CartItem` bilan bog'lash
+                    cartItem.setCart(cart);
                     return cartItem;
                 }).collect(Collectors.toList());
         cart.setCartItems(cartItems);
@@ -173,9 +173,6 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        if (!product.isPresent()) {
-            throw new IllegalArgumentException("Product is not available: " + dto.getProductId());
-        }
 
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);

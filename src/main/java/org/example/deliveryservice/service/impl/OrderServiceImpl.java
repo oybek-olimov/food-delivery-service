@@ -56,51 +56,6 @@ public class OrderServiceImpl implements OrderService {
         this.orderMapper = orderMapper;
     }
 
-    @Transactional
-    @Override
-    public OrderResponseDto createOrder(OrderCreateDto orderCreateDto) {
-//        // Foydalanuvchini olish (Session asosida ishlashni moslashtirish kerak)
-//        Long sessionUserId = 1L;
-//        AuthUser user = authUserRepository.findById(sessionUserId)
-//                .orElseThrow(() -> new IllegalArgumentException("Foydalanuvchi topilmadi: ID = " + sessionUserId));
-//
-//        // To'lovni yaratish
-//        Payment payment = new Payment();
-//        payment.setPaymentMethod("Cash");
-//        paymentRepository.save(payment);
-//
-//        // Buyurtmani yaratish
-//        Order order = new Order();
-//        order.setEmail(orderCreateDto.getEmail());
-//        order.setUser(user);
-//        order.setOrderDate(LocalDate.now());
-//        order.setPayment(payment);
-//        order.setOrderStatus(UserOrderStatus.PLACED.name());
-
-        // OrderItemlar yaratish
-//        List<OrderItem> orderItems = orderCreateDto.().stream()
-//                .map(dto -> toOrderItem(dto, order))
-//                .collect(Collectors.toList());
-//        order.setOrderItems(orderItems);
-//      List<OrderItem> orderItems = orderCreateDto.getOrderItems().stream()
-//                .map(dto -> toOrderItem(dto, order))
-//                .collect(Collectors.toList());
-//        order.setOrderItems(orderItems);
-
-//
-//        // Umumiy narxni hisoblash
-//        double totalAmount = orderItems.stream()
-//                .mapToDouble(item -> item.getOrderedProductPrice() * item.getQuantity())
-//                .sum();
-//        order.setTotalAmount(totalAmount);
-//
-//        // Orderni saqlash
-//        orderRepository.save(order);
-//        log.info("Buyurtma yaratildi: foydalanuvchi ID = {}", sessionUserId);
-//
-//        return toOrderResponseDto(order);
-        return null;
-    }
 
     @Transactional(readOnly = true)
     @Override
