@@ -185,7 +185,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void updateOrderStatus(Long orderId, String newStatus) {
         Order order = orderRepository.findByOrderIdAndDeletedFalse(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Buyurtma topilmadi: ID = " + orderId));
@@ -323,7 +322,7 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalStateException("Buyurtma allaqachon o'chirilgan: ID = " + orderId);
         }
 
-        order.setDeleted(true); // Soft delete the order
+        order.setDeleted(true);
         orderRepository.save(order);
 
         log.info("Buyurtma soft delete qilindi: ID = {}", orderId);
