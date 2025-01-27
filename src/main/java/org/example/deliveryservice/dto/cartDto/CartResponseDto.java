@@ -12,5 +12,5 @@ public class CartResponseDto {
     private Long cartId;
     private Long userId;
     private List<CartItemResponseDto> cartItems;
-    private long totalPriceSom; // Umumiy narx foydalanuvchiga so'mda qaytariladi
+    private long totalPriceSom;
 }
