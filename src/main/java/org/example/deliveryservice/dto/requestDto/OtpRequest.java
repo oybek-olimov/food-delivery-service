@@ -8,7 +8,7 @@ import lombok.Value;
 import java.io.Serializable;
 
 
-@Value
+
 public class OtpRequest implements Serializable {
     @Email
     String email;
