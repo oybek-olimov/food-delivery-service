@@ -27,10 +27,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderCreateDto orderCreateDto) {
-        return ResponseEntity.ok(orderService.createOrder(orderCreateDto));
-    }
 
     @PostMapping("/create-from-cart/{cartId}")
     public ResponseEntity<OrderResponseDto> createOrderFromCartId(@PathVariable Long cartId) {
