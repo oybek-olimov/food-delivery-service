@@ -24,5 +24,6 @@ The **Food Delivery Service** project is a backend system designed to manage and
 - **JWT (JSON Web Tokens)**
 - **PostgreSQL**
 - **Swagger**
+- **Hibernate**
 
 
